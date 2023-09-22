@@ -1,17 +1,4 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.1
-=========================================================
 
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -37,7 +24,7 @@ function SidenavCard() {
   return (
     <Card sx={(theme) => card(theme, { miniSidenav })}>
       <CardContent sx={(theme) => cardContent(theme, { sidenavColor })}>
-        <SoftBox
+        {/* <SoftBox
           bgColor="white"
           width="2rem"
           height="2rem"
@@ -47,17 +34,17 @@ function SidenavCard() {
           sx={cardIconBox}
         >
           <Icon fontSize="medium" sx={(theme) => cardIcon(theme, { sidenavColor })}>
-            star
+            s
           </Icon>
-        </SoftBox>
+        </SoftBox> */}
         <SoftBox lineHeight={1}>
           <SoftTypography variant="h6" color="white">
-            Need help?
+            Access User Database
           </SoftTypography>
           <SoftBox mb={1.825} mt={-1}>
-            <SoftTypography variant="caption" color="white" fontWeight="medium">
+            {/* <SoftTypography variant="caption" color="white" fontWeight="medium">
               Please check our docs
-            </SoftTypography>
+            </SoftTypography> */}
           </SoftBox>
           <SoftButton
             component={Link}
@@ -68,7 +55,7 @@ function SidenavCard() {
             color="white"
             fullWidth
           >
-            documentation
+            Database Access
           </SoftButton>
         </SoftBox>
       </CardContent>

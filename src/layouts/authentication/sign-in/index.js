@@ -1,17 +1,3 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 
 import { useState } from "react";
 
@@ -27,14 +13,44 @@ import SoftTypography from "components/SoftTypography";
 import SoftInput from "components/SoftInput";
 import SoftButton from "components/SoftButton";
 
+
+
 // Authentication layout components
 import CoverLayout from "layouts/authentication/components/CoverLayout";
 
+import { useNavigate } from 'react-router-dom';
 // Images
 import curved9 from "assets/images/curved-images/curved-6.jpg";
+import { useSignIn } from "@clerk/clerk-react";
 
 function SignIn() {
   const [rememberMe, setRememberMe] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+ const navigate = useNavigate();
+  const { isLoaded, signIn, setActive } = useSignIn();
+  if (!isLoaded) {
+    return null;
+  }
+ 
+  async function submit(e) {
+    e.preventDefault();
+    await signIn
+      .create({
+        identifier: email,
+        password,
+      })
+      .then((result) => {
+        if (result.status === "complete") {
+          console.log(result);
+          setActive({ session: result.createdSessionId });
+          navigate("/dashboard")
+        } else {
+          console.log(result);
+        }
+      })
+      .catch((err) => console.error("error", err.errors[0].longMessage));
+  }
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
@@ -44,14 +60,15 @@ function SignIn() {
       description="Enter your email and password to sign in"
       image={curved9}
     >
-      <SoftBox component="form" role="form">
+      <SoftBox component="form" role="form" onSubmit={submit}>
         <SoftBox mb={2}>
           <SoftBox mb={1} ml={0.5}>
             <SoftTypography component="label" variant="caption" fontWeight="bold">
               Email
             </SoftTypography>
           </SoftBox>
-          <SoftInput type="email" placeholder="Email" />
+          <SoftInput type="email" placeholder="Email" value={email}
+          onChange={(e) => setEmail(e.target.value)} />
         </SoftBox>
         <SoftBox mb={2}>
           <SoftBox mb={1} ml={0.5}>
@@ -59,7 +76,8 @@ function SignIn() {
               Password
             </SoftTypography>
           </SoftBox>
-          <SoftInput type="password" placeholder="Password" />
+          <SoftInput type="password" placeholder="Password" value={password}
+          onChange={(e) => setPassword(e.target.value)} />
         </SoftBox>
         <SoftBox display="flex" alignItems="center">
           <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -73,7 +91,8 @@ function SignIn() {
           </SoftTypography>
         </SoftBox>
         <SoftBox mt={4} mb={1}>
-          <SoftButton variant="gradient" color="info" fullWidth>
+          <SoftButton variant="gradient" color="info" fullWidth onClick={submit} component={Link}
+              to="/dashboard">
             sign in
           </SoftButton>
         </SoftBox>

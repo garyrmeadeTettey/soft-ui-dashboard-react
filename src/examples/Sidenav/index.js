@@ -1,17 +1,4 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.1
-=========================================================
 
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 
 import { useEffect } from "react";
 
@@ -39,6 +26,7 @@ import SidenavCard from "examples/Sidenav/SidenavCard";
 // Custom styles for the Sidenav
 import SidenavRoot from "examples/Sidenav/SidenavRoot";
 import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
+import { SignOutButton } from "@clerk/clerk-react"
 
 // Soft UI Dashboard React context
 import { useSoftUIController, setMiniSidenav } from "context";
@@ -144,13 +132,13 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           </SoftTypography>
         </SoftBox>
         <SoftBox component={NavLink} to="/" display="flex" alignItems="center">
-          {brand && <SoftBox component="img" src={brand} alt="Soft UI Logo" width="2rem" />}
+          {/* {brand && <SoftBox component="img" src={brand} alt="Soft UI Logo" width="2rem" />} */}
           <SoftBox
             width={!brandName && "100%"}
             sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}
           >
-            <SoftTypography component="h6" variant="button" fontWeight="medium">
-              {brandName}
+            <SoftTypography component="h6" variant="button" fontWeight="medium" >
+              BetterMan Admin
             </SoftTypography>
           </SoftBox>
         </SoftBox>
@@ -162,14 +150,15 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         <SoftBox mt={2}>
           <SoftButton
             component="a"
-            href="https://creative-tim.com/product/soft-ui-dashboard-pro-react"
+            href="/authentication/sign-in"
             target="_blank"
             rel="noreferrer"
             variant="gradient"
             color={color}
             fullWidth
           >
-            upgrade to pro
+            
+          <SignOutButton />
           </SoftButton>
         </SoftBox>
       </SoftBox>

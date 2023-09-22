@@ -1,17 +1,4 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.1
-=========================================================
 
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 
 /** 
   All of the routes for the Soft UI Dashboard React are added here,
@@ -42,8 +29,8 @@ import Billing from "layouts/billing";
 import VirtualReality from "layouts/virtual-reality";
 import RTL from "layouts/rtl";
 import Profile from "layouts/profile";
-import SignIn from "layouts/authentication/sign-in";
-import SignUp from "layouts/authentication/sign-up";
+import SignInPage from "layouts/authentication/sign-in";
+import SignUpPage from "layouts/authentication/sign-up";
 
 // Soft UI Dashboard React icons
 import Shop from "examples/Icons/Shop";
@@ -54,6 +41,14 @@ import SpaceShip from "examples/Icons/SpaceShip";
 import CustomerSupport from "examples/Icons/CustomerSupport";
 import CreditCard from "examples/Icons/CreditCard";
 import Cube from "examples/Icons/Cube";
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  UserButton,
+  useUser,
+  RedirectToSignIn,
+} from "@clerk/clerk-react";
 
 const routes = [
   {
@@ -67,7 +62,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Tables",
+    name: "Users",
     key: "tables",
     route: "/tables",
     icon: <Office size="12px" />,
@@ -85,22 +80,22 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Virtual Reality",
+    name: "New",
     key: "virtual-reality",
-    route: "/virtual-reality",
+    route: "/new",
     icon: <Cube size="12px" />,
-    component: <VirtualReality />,
+    component: <Tables />,
     noCollapse: true,
   },
-  {
-    type: "collapse",
-    name: "RTL",
-    key: "rtl",
-    route: "/rtl",
-    icon: <Settings size="12px" />,
-    component: <RTL />,
-    noCollapse: true,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "RTL",
+  //   key: "rtl",
+  //   route: "/rtl",
+  //   icon: <Settings size="12px" />,
+  //   component: <RTL />,
+  //   noCollapse: true,
+  // },
   { type: "title", title: "Account Pages", key: "account-pages" },
   {
     type: "collapse",
@@ -117,7 +112,7 @@ const routes = [
     key: "sign-in",
     route: "/authentication/sign-in",
     icon: <Document size="12px" />,
-    component: <SignIn />,
+    component: <SignInPage />,
     noCollapse: true,
   },
   {
@@ -126,7 +121,16 @@ const routes = [
     key: "sign-up",
     route: "/authentication/sign-up",
     icon: <SpaceShip size="12px" />,
-    component: <SignUp />,
+    component: <SignUpPage />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Log Out",
+    key: "sign-up",
+    route: "/authentication/sign-up",
+    icon: <SpaceShip size="12px" />,
+    component: <SignUpPage />,
     noCollapse: true,
   },
 ];

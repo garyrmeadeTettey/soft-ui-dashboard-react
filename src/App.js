@@ -1,17 +1,3 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 
 import { useState, useEffect, useMemo } from "react";
 
@@ -47,6 +33,19 @@ import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from "contex
 
 // Images
 import brand from "assets/images/logo-ct.png";
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  UserButton,
+  useUser,
+  RedirectToSignIn,
+} from "@clerk/clerk-react";
+ 
+if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key")
+}
+const clerkPubKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
 
 export default function App() {
   const [controller, dispatch] = useSoftUIController();
@@ -54,6 +53,22 @@ export default function App() {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
+
+
+const postgres = require('postgres');
+require('dotenv').config();
+
+const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = process.env;
+const URL = `postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}?options=project%3D${ENDPOINT_ID}`;
+
+const sql = postgres(URL, { ssl: 'require' });
+
+async function getPgVersion() {
+  const result = await sql`select version()`;
+  console.log(result);
+}
+
+getPgVersion();
 
   // Cache for the rtl
   useMemo(() => {
@@ -115,7 +130,7 @@ export default function App() {
       alignItems="center"
       width="3.5rem"
       height="3.5rem"
-      bgColor="white"
+      bgColor="pink"
       shadow="sm"
       borderRadius="50%"
       position="fixed"
@@ -133,6 +148,7 @@ export default function App() {
   );
 
   return direction === "rtl" ? (
+    
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={themeRTL}>
         <CssBaseline />
@@ -141,7 +157,7 @@ export default function App() {
             <Sidenav
               color={sidenavColor}
               brand={brand}
-              brandName="Soft UI Dashboard"
+              brandName="BetterMan"
               routes={routes}
               onMouseEnter={handleOnMouseEnter}
               onMouseLeave={handleOnMouseLeave}
@@ -158,14 +174,16 @@ export default function App() {
       </ThemeProvider>
     </CacheProvider>
   ) : (
+    <ClerkProvider publishableKey={clerkPubKey}>
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      
       {layout === "dashboard" && (
         <>
           <Sidenav
             color={sidenavColor}
             brand={brand}
-            brandName="Soft UI Dashboard"
+            brandName="BetterMan"
             routes={routes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
@@ -178,7 +196,9 @@ export default function App() {
       <Routes>
         {getRoutes(routes)}
         <Route path="*" element={<Navigate to="/dashboard" />} />
+        
       </Routes>
     </ThemeProvider>
+    </ClerkProvider>
   );
 }
